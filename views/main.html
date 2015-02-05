@@ -1,0 +1,31 @@
+<div id="viewport">
+	<ul class="stack" swing-stack>
+		<a class="btn listen pull-left glyphicon glyphicon-plus-sign" 
+		ng-disabled="myform.$invalid" ng-click="addCard();reset();" ng-show="emptyStack">
+		</a>			
+		<a class="flip pull-right glyphicon glyphicon-share-alt" ng-click="reset();" ng-show="emptyStack"></a>
+		<div class="inputwrapper" ng-show="emptyStack">
+			<form name="myform"
+			novalidate>
+				<input type="text" class="front" name="front" placeholder="Front"
+					ng-model="front" ng-required="true">
+
+				<input type="text" class="back" name="back" placeholder="Back"
+					ng-model="back" ng-required="true">
+
+				<input type="text" class="phonetic" name="phonetic" placeholder="Phonetic"
+					ng-model="phonetic">
+
+
+			</form>
+		</div>
+		<li swing-card
+			ng-repeat="card in cards" ng-class="card.front">			
+			<a class="listen pull-left glyphicon glyphicon-volume-up" ng-click="listen(card);"></a>
+			<a class="flip pull-right glyphicon glyphicon-share-alt" ng-click="flipCard(card);" ></a>
+			<span class="front">{{card.front}}</span>
+			<span class="back">{{card.back}}</span>
+			<span class="phonetic">{{card.phonetic}}</span>
+		</li>
+	</ul>
+</div>
