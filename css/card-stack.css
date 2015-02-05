@@ -1,0 +1,138 @@
+@media (max-width: 979px) {
+  body {
+    padding-top: 0px;
+  }
+}
+
+html, body, ul, li {
+  margin: 0;
+  padding: 0; }
+
+body {
+  background: #FCD424;
+    padding-top: 60px;
+
+  }
+.narrow {
+  width: 500px;
+  margin-left: -250px;
+
+  left: 50%;
+  position: absolute; }  
+
+#viewport {
+  width: 500px;
+  height: 500px;
+  /*background: #C7433E;*/
+  /*border: 10px solid #ED5D52;*/
+  margin: 100px auto 0;
+  position: relative; }
+  #viewport .stack {
+    width: 300px;
+    height: 200px;
+    background: #ED5D52;
+    position: absolute;
+    top: 100px;
+    left: 50%;
+    margin-left: -150px;
+    border: 5px dotted white;
+    border-radius: 10px; }
+  #viewport li {
+    width: 300px;
+    height: 200px;
+    list-style: none;
+    background: #fff;
+    border-radius: 5px;
+    position: absolute;
+    top: -5px;
+    left: -5px;
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.2), 1px 1px 1px rgba(0, 0, 0, 0.2);
+    /*line-height: 300px;*/
+    text-align: center;
+    /*font-size: 100px;*/
+    border: 10px solid #ECECEC;
+    box-sizing: border-box;
+    cursor: default; 
+    }
+    
+
+	div.inputwrapper {
+		position: absolute;
+		margin-left: -88px;
+		margin-top: -17px;
+		left: 50%;
+		top: 50%;
+	}
+    input.back, input.phonetic {
+		display: none;
+
+	}   
+	
+	 
+    span.back {
+		display: inline-block;
+		margin-top: 60px;
+		font-size: 30px;
+		display: none;
+
+	}    
+	span.phonetic {
+		/*line-height: 180px;*/
+		font-size: 15px;
+		display: none;
+		font-style: italic;
+
+	}
+	span.phonetic-show {
+		display: block;
+	}
+	span.front {
+		display: inline-block;
+		margin-top: 60px;
+		font-size: 30px;
+
+	}
+	a.flip {
+		text-decoration: none;
+		padding-right: 10px;
+		padding-top: 5px;
+		font-size:24px;
+
+	}
+	a.listen {
+		text-decoration: none;
+		padding-left: 10px;
+		padding-top: 5px;
+		font-size:24px;
+
+	}	
+	 a.flip:hover, a.listen:hover {
+		color: red;
+		cursor: pointer;
+	}
+
+	.nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
+	
+	
+.animate-enter {
+  -webkit-animation: enter_sequence 1s linear; /* Safari/Chrome */
+  -moz-animation: enter_sequence 1s linear; /* Firefox */
+  -o-animation: enter_sequence 1s linear; /* Opera */
+  animation: enter_sequence 1s linear; /* IE10+ and Future Browsers */
+}
+@-webkit-keyframes enter_sequence {
+  from { opacity:0; }
+  to { opacity:1; }
+}
+@-moz-keyframes enter_sequence {
+  from { opacity:0; }
+  to { opacity:1; }
+}
+@-o-keyframes enter_sequence {
+  from { opacity:0; }
+  to { opacity:1; }
+}
+@keyframes enter_sequence {
+  from { opacity:0; }
+  to { opacity:1; }
+}
