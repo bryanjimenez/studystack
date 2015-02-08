@@ -165,15 +165,14 @@ var studystack = angular.module('studystack', ['ui.bootstrap','gajus.swing','fir
 				Yiddish : 'yi'
 			};
 
-			var url = "http://translate.google.com/translate_tts?tl="+languages[l]+"&q="+card[l=='english'?'front':'back'];
+
+			var url = "http://greek.webuda.com/voice.php?tl="+languages[l]+"&q="+card[l=='english'?'front':'back'];
 		
-			var $iframe = $('<iframe src="'+url+'" rel="noreferrer"></iframe>');
-			$('body').append($iframe);
-			$iframe.hide();	
-			
-			setTimeout(function() {
-				$iframe.remove();
-			}, 5000);
+			//var $audio = $('<audio id="player" src="'+url+'" controls></audio>');
+			//$('body').append($audio);
+			$('#player').attr('src',url)[0].play();	
+
+			//setTimeout(function() {	}, 5000);
 
 		} // listen
 		
@@ -186,8 +185,6 @@ var studystack = angular.module('studystack', ['ui.bootstrap','gajus.swing','fir
 
 
 studystack.controller('DropdownCtrl', function($rootScope, $scope, $routeParams, $location, myStack, AlertCtrl) {
- 
-
  
 	$scope.setLanguage = function(){
 			AlertCtrl.addAlert('danger','Under Development');		
@@ -224,16 +221,6 @@ studystack.controller('DropdownCtrl', function($rootScope, $scope, $routeParams,
 		}
 		
 	};// shareStack
-	
-	$scope.showAbout = function (){
-		var msg = 'Created and maintained by Bryan. '
-				+'Hosted by github. '
-				+'Special thanks to Alex and Andrew. '
-					
-		
-		
-			AlertCtrl.addAlert('success',msg,5000);
-	}
 });
 
 
@@ -243,13 +230,13 @@ studystack.factory('AlertCtrl', function($timeout) {
     var itemsService = {};
 
 	itemsService.addAlert = function(type, message, time) {
-		if(time===undefined){
+		/*if(time===undefined){
 			var time = 3000;
-		}
+		}*/
 		alerts.push({type: type, msg: message});
-		$timeout(function(){
+		/*$timeout(function(){
 			alerts.splice(alerts.length-1, 1);
-		},time);
+		},time);*/
 	};
 
 	itemsService.closeAlert = function(index) {
@@ -266,4 +253,66 @@ studystack.controller('AlertDemoCtrl', function ($scope, AlertCtrl) {
   $scope.alerts = AlertCtrl.alerts;
   $scope.addAlert = AlertCtrl.addAlert;
   $scope.closeAlert = AlertCtrl.closeAlert;
+});
+
+
+studystack.controller('Modals', function ($scope, $modal, $log) {
+
+  $scope.items = ['item1', 'item2', 'item3'];
+
+  $scope.showAbout = function (size) {
+
+    var modalInstance = $modal.open({
+      templateUrl: 'views/about.html',
+      controller: 'ModalInstanceCtrl',
+      size: size,
+      resolve: {
+        items: function () {
+          return $scope.items;
+        }
+      }
+    });
+    
+  modalInstance.result.then(function (selectedItem) {
+      $scope.selected = selectedItem;
+    }, function () {
+      $log.info('Modal dismissed at: ' + new Date());
+    });
+  };
+    
+  $scope.setLanguage = function (size) {
+    var modalInstance = $modal.open({
+      templateUrl: 'views/language.html',
+      controller: 'ModalInstanceCtrl',
+      size: size,
+      resolve: {
+        items: function () {
+          return $scope.items;
+        }
+      }
+    });
+    
+
+    modalInstance.result.then(function (selectedItem) {
+      $scope.selected = selectedItem;
+    }, function () {
+      $log.info('Modal dismissed at: ' + new Date());
+    });
+  };
+});
+
+// Please note that $modalInstance represents a modal window (instance) dependency.
+// It is not the same as the $modal service used above.
+
+studystack.controller('ModalInstanceCtrl', function ($scope, $modalInstance, items) {
+
+  $scope.items = items;
+  $scope.selected = {
+    item: $scope.items[0]
+  };
+
+  $scope.close = function () {
+    $modalInstance.close($scope.selected.item);
+  };
+
 });
