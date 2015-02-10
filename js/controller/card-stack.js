@@ -8,7 +8,11 @@ studystack.config(['$routeProvider', function($routeProvider) {
         templateUrl: 'views/main.html',
         controller: 'card-stack'
     }).
-    when('/:hl/:tl/:sId', {
+    when('/:sId', {
+        templateUrl: 'views/main.html',
+        controller: 'card-stack'
+    }).    
+    when('/:fl/:bl', {
         templateUrl: 'views/main.html',
         controller: 'card-stack'
     }).
@@ -16,6 +20,7 @@ studystack.config(['$routeProvider', function($routeProvider) {
         redirectTo: '/'
     });
 }]);
+
 
 studystack.factory('myStack', function($firebase, $routeParams, FIREBASE_URL) {
     var s = {};
@@ -67,7 +72,14 @@ studystack.controller('card-stack', function($rootScope, $scope, $firebase, $rou
     
     var top_lang = $routeParams.hl;
     var bottom_lang = $routeParams.tl;
-
+    
+    
+    if($routeParams.fl){
+		$rootScope.fl=$routeParams.fl;
+	}
+	if($routeParams.bl){
+		$rootScope.bl=$routeParams.bl;
+	}
 
     cards.$loaded().then(function(data) {
         $rootScope.cards = cards;
@@ -79,8 +91,12 @@ studystack.controller('card-stack', function($rootScope, $scope, $firebase, $rou
             // FIX THIS
             var card = {
                 front: $scope.front,
+                f_audio: TTS_PROXY_URL + "?tl=" + $rootScope.fl + "&q=" + $scope.front,
+                f_lang: $rootScope.fl,
                 back: $scope.back,
-                phonetic: $scope.phonetic === undefined ? '' : $scope.phonetic
+                b_audio: TTS_PROXY_URL + "?tl=" + $rootScope.bl + "&q=" + $scope.back,
+                b_lang: $rootScope.bl,
+                phonetic: $scope.phonetic === undefined ? '' : $scope.phonetic,
             }
 
             $rootScope.cards.push(card);
@@ -100,83 +116,10 @@ studystack.controller('card-stack', function($rootScope, $scope, $firebase, $rou
 
 
     // very hacky...
-    $scope.listen = function(card) {
-
-            var l = $('li.' + card.front + ' > span.front').is(':visible') ? 'english' : 'greek';
-
-            languages = {
-                Afrikaans: 'af',
-                Albanian: 'sq',
-                Arabic: 'ar',
-                Azerbaijani: 'az',
-                Basque: 'eu',
-                Bengali: 'bn',
-                Belarusian: 'be',
-                Bulgarian: 'bg',
-                Catalan: 'ca',
-                Chinese: 'zh-CN',
-                Croatian: 'hr',
-                Czech: 'cs',
-                Danish: 'da',
-                Dutch: 'nl',
-                english: 'en',
-                Esperanto: 'eo',
-                Estonian: 'et',
-                Filipino: 'tl',
-                Finnish: 'fi',
-                French: 'fr',
-                Galician: 'gl',
-                Georgian: 'ka',
-                German: 'de',
-                greek: 'el',
-                Gujarati: 'gu',
-                Haitian: 'ht',
-                Creole: 'ht',
-                Hebrew: 'iw',
-                Hindi: 'hi',
-                Hungarian: 'hu',
-                Icelandic: 'is',
-                Indonesian: 'id',
-                Irish: 'ga',
-                Italian: 'it',
-                Japanese: 'ja',
-                Kannada: 'kn',
-                Korean: 'ko',
-                Latin: 'la',
-                Latvian: 'lv',
-                Lithuanian: 'lt',
-                Macedonian: 'mk',
-                Malay: 'ms',
-                Maltese: 'mt',
-                Norwegian: 'no',
-                Persian: 'fa',
-                Polish: 'pl',
-                Portuguese: 'pt',
-                Romanian: 'ro',
-                Russian: 'ru',
-                Serbian: 'sr',
-                Slovak: 'sk',
-                Slovenian: 'sl',
-                Spanish: 'es',
-                Swahili: 'sw',
-                Swedish: 'sv',
-                Tamil: 'ta',
-                Telugu: 'te',
-                Thai: 'th',
-                Turkish: 'tr',
-                Ukrainian: 'uk',
-                Urdu: 'ur',
-                Vietnamese: 'vi',
-                Welsh: 'cy',
-                Yiddish: 'yi'
-            };
-
-            var url = TTS_PROXY_URL + "?tl=" + languages[l] + "&q=" + card[l == 'english' ? 'front' : 'back'];
-
-            $('#player').attr('src', url)[0].play();
-
-
-        } // listen
+    $scope.listen = function(card) {	
+            var a = $('li.' + card.front + ' > span.front').is(':visible') ? $('li.' + card.front + ' > audio.front') : $('li.' + card.front + ' > audio.back');
+            a[0].play();
+	} // listen
 
     $scope.reset = function() {
             $('input').each(function() {
@@ -187,16 +130,24 @@ studystack.controller('card-stack', function($rootScope, $scope, $firebase, $rou
 
 
 studystack.controller('DropdownCtrl', function($rootScope, $scope, $routeParams, $location, myStack) {
-
     $scope.saveStack = function() {
             if ($rootScope.cards.length > 0) {
+				
+				if($rootScope.fl && $rootScope.bl){
+					
+					
+				
                 myStack.create($scope.cards,
-                    function(key) {
-                        $location.path('/s/' + key);
+                    function(key) {						
+                        $location.path('/'+ key);
                     });
+				}else{
+					alert('please set language');
+				}
+				
             } else {
 				//TODO add alert here..
-                //AlertCtrl.addAlert('danger', 'Please create a card first');
+                alert('Please create a card first');
             }
     } //saveStack
 
@@ -208,3 +159,15 @@ studystack.controller('DropdownCtrl', function($rootScope, $scope, $routeParams,
     } //newStack
 
 });
+
+
+/* Fix
+ * Error: error:insecurl
+ * Processing of a Resource from Untrusted Source Blocked
+ * 
+ **/
+studystack.filter('trustUrl', function ($sce) {
+    return function(url) {
+      return $sce.trustAsResourceUrl(url);
+    };
+  });
