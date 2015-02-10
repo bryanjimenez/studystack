@@ -18,6 +18,7 @@
 
 	<!-- GreekCards App -->
     <script src="./js/controller/card-stack.js"></script>
+    <script src="./js/controller/modals.js"></script>
     
     <!-- jQuery -->
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
@@ -36,14 +37,10 @@
 	<header ng-controller="DropdownCtrl">
 		<nav ng-include="'views/nav.html'">
 		</nav>
-	</header>
-	<div ng-controller="AlertDemoCtrl"> 
-		<alert class="narrow" ng-directive ng-animate="{enter: 'animate-enter'}" ng-repeat="alert in alerts" type="alert.type" close="closeAlert($index)">{{alert.msg}}</alert>
-	</div>		
+	</header>	
 	
 	<main ng-view></main>
 	<audio id="player">
-		  <!--<source src="http://greek.webuda.com/voice.php?tl=en&q=pencil" type="audio/mpeg"/>-->
 	</audio>
 </body>
 </html>

@@ -25,9 +25,9 @@
                 <li class="dropdown-header">Card Stack</li>
                 <li><a data-toggle="collapse" data-target=".navbar-collapse" ng-click="newStack();"><span class="glyphicon glyphicon-refresh"/> New</a></li>
                 <li ng-show="emptyStack"><a data-toggle="collapse" data-target=".navbar-collapse" ng-click="saveStack();"><span class="glyphicon glyphicon-cloud-upload"/> Save</a></li>
-                <li ng-hide="emptyStack"><a data-toggle="collapse" data-target=".navbar-collapse" ng-click="shareStack();"><span class="glyphicon glyphicon-link"/> Share</a></li>
+                <li ng-hide="emptyStack"><a data-toggle="collapse" data-target=".navbar-collapse" ng-click="showShareLink();"><span class="glyphicon glyphicon-link"/> Share</a></li>
                 <li class="divider"></li>
-                <li><a data-toggle="collapse" data-target=".navbar-collapse" ng-click="showAbout('sm');"><span class="glyphicon glyphicon-info-sign"/> About</a></li>
+                <li><a data-toggle="collapse" data-target=".navbar-collapse" ng-click="showAbout();"><span class="glyphicon glyphicon-info-sign"/> About</a></li>
 
 			  </ul>
             </li>
