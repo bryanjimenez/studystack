@@ -64,31 +64,84 @@ studystack.factory('myStack', function($firebase, $routeParams, FIREBASE_URL) {
 });
 
 
-studystack.controller('card-stack', function($rootScope, $scope, $firebase, $routeParams, myStack, FIREBASE_URL, TTS_PROXY_URL) {
+studystack.controller('card-stack', function($rootScope, $scope, $firebase, $location, $routeParams, myStack, FIREBASE_URL, TTS_PROXY_URL) {
 
-    var root = new Firebase(FIREBASE_URL);
-    var stack = new Firebase(FIREBASE_URL + "/" + $routeParams.sId);
-    var cards = $firebase(stack).$asArray();
-    
-    var top_lang = $routeParams.hl;
-    var bottom_lang = $routeParams.tl;
-    
-    
-    if($routeParams.fl){
-		$rootScope.fl=$routeParams.fl;
+	
+	if($routeParams.sId === undefined && $routeParams.fl === undefined && $routeParams.bl === undefined){
+		no_params();
 	}
-	if($routeParams.bl){
-		$rootScope.bl=$routeParams.bl;
+	else if($routeParams.sId){
+		one_params();
+	}
+	else if($routeParams.fl && $routeParams.bl){
+		two_params();
 	}
 
-    cards.$loaded().then(function(data) {
-        $rootScope.cards = cards;
-    }); // cards Object Loaded
 
-    $rootScope.emptyStack = ($routeParams.sId ? false : true);
+
+	function no_params(){
+		console.log('0 params');
+				
+		set_languages('en','el');
+		empty_stack();
+	}	
+	
+	function one_params(){
+		console.log('1 params');
+		
+		load_stack();		
+	}
+		
+	function two_params(){
+		console.log('2 params');
+		
+		if(is_language($routeParams.fl) && is_language($routeParams.bl)){
+			set_languages($routeParams.fl,$routeParams.bl);
+			empty_stack();
+		}
+		else{
+			alert('wrong parameters');
+		}
+	}
+
+    
+	function set_languages(fl,bl){
+		$rootScope.fl=fl;
+		$rootScope.bl=bl;
+	}
+
+	function is_language(language){
+		return true;
+	}
+    
+    function empty_stack(){
+		$rootScope.cards = [];
+		$rootScope.haveStack = false;
+	}
+	
+	function full_stack(cards){
+		$rootScope.cards = cards;
+		$rootScope.haveStack = true;
+	}
+    
+    function load_stack(){
+		var root = new Firebase(FIREBASE_URL);
+		var stack = new Firebase(FIREBASE_URL + "/" + $routeParams.sId);    
+		var cards = $firebase(stack).$asArray();
+		
+		cards.$loaded().then(function(data) {
+			if(cards.length>0){
+				full_stack(cards);
+			}
+			else{
+				alert('no stack found with this id');
+				set_languages('en','el');
+				empty_stack();					
+			}
+		});
+	}
 
     $scope.addCard = function() {
-            // FIX THIS
             var card = {
                 front: $scope.front,
                 f_audio: TTS_PROXY_URL + "?tl=" + $rootScope.fl + "&q=" + $scope.front,
@@ -105,50 +158,30 @@ studystack.controller('card-stack', function($rootScope, $scope, $firebase, $rou
             $scope.back = "";
             $scope.phonetic = "";
 	} //addCard
+	
 
-
-    // need to move this out of here....
-    $scope.flipCard = function(card) {
-        $('li.' + card.front + ' > span.front').toggle(200);
-        $('li.' + card.front + ' > span.back').toggle(200);
-        $('li.' + card.front + ' > span.phonetic').toggleClass('phonetic-show', 200);
-    }; // flipCard		
-
-
-    // very hacky...
     $scope.listen = function(card) {	
-            var a = $('li.' + card.front + ' > span.front').is(':visible') ? $('li.' + card.front + ' > audio.front') : $('li.' + card.front + ' > audio.back');
-            a[0].play();
+           $('li.' + card.front + ' > audio:not(.ng-hide)')[0].play();
 	} // listen
 
     $scope.reset = function() {
             $('input').each(function() {
                 $(this).toggle().not('.phonetic').focus();
             });
-        } // reset
+	} // reset
 });
 
 
 studystack.controller('DropdownCtrl', function($rootScope, $scope, $routeParams, $location, myStack) {
     $scope.saveStack = function() {
-            if ($rootScope.cards.length > 0) {
-				
-				if($rootScope.fl && $rootScope.bl){
-					
-					
-				
-                myStack.create($scope.cards,
-                    function(key) {						
-                        $location.path('/'+ key);
-                    });
-				}else{
-					alert('please set language');
-				}
-				
-            } else {
-				//TODO add alert here..
-                alert('Please create a card first');
-            }
+		if ($rootScope.cards.length > 0) {
+			myStack.create($scope.cards,
+				function(key) {						
+					$location.path('/'+ key);
+				});	
+		} else {
+			alert('Please create a card first');
+		}
     } //saveStack
 
     $scope.newStack = function() {
@@ -161,7 +194,7 @@ studystack.controller('DropdownCtrl', function($rootScope, $scope, $routeParams,
 });
 
 
-/* Fix
+/* Fix for
  * Error: error:insecurl
  * Processing of a Resource from Untrusted Source Blocked
  * 

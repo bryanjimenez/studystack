@@ -1,34 +1,37 @@
 <div id="viewport">
 	<ul class="stack" swing-stack>
-		<a class="btn listen pull-left glyphicon glyphicon-plus-sign" 
-		ng-disabled="myform.$invalid" ng-click="addCard();reset();" ng-show="emptyStack">
-		</a>			
-		<a class="flip pull-right glyphicon glyphicon-share-alt" ng-click="reset();" ng-show="emptyStack"></a>
-		<div class="inputwrapper" ng-show="emptyStack">
-			<form name="myform"
-			novalidate>
-				<input type="text" class="front" name="front" placeholder="Front"
-					ng-model="front" ng-required="true">
+		<div ng-hide="haveStack">
+			<a class="btn listen pull-left glyphicon glyphicon-plus-sign" 
+			ng-disabled="myform.$invalid" ng-click="addCard();reset();" >
+			</a>			
+			<a class="flip pull-right glyphicon glyphicon-share-alt" ng-click="reset();"></a>
+			<div class="inputwrapper">
+				<form name="myform"
+				novalidate>
+					<input type="text" class="front" name="front" placeholder="Front"
+						ng-model="front" ng-required="true">
 
-				<input type="text" class="back" name="back" placeholder="Back"
-					ng-model="back" ng-required="true">
+					<input type="text" class="back" name="back" placeholder="Back"
+						ng-model="back" ng-required="true">
 
-				<input type="text" class="phonetic" name="phonetic" placeholder="Phonetic"
-					ng-model="phonetic">
-
-
-			</form>
+					<input type="text" class="phonetic" name="phonetic" placeholder="Phonetic"
+						ng-model="phonetic">
+				</form>
+			</div>
 		</div>
 
 		<li class="card" swing-card
 			ng-repeat="card in cards" ng-class="card.front">			
 			<a class="listen pull-left glyphicon glyphicon-volume-up" ng-click="listen(card);"></a>
-			<a class="flip pull-right glyphicon glyphicon-share-alt" ng-click="flipCard(card);" ></a>
-			<span class="front">{{card.front}}</span>
-			<audio class="front" ng-src="{{card.f_audio | trustUrl}}"></audio>
-			<span class="back">{{card.back}}</span>
-			<audio class="back" ng-src="{{card.b_audio | trustUrl}}"></audio>
-			<span class="phonetic">{{card.phonetic}}</span>
+			<a class="flip pull-right glyphicon glyphicon-share-alt" ng-click="flip[$index]=!flip[$index];" ></a>
+			
+			<span class="front" ng-hide="flip[$index]">{{card.front}}</span>
+			<audio class="front" ng-hide="flip[$index]" ng-src="{{card.f_audio | trustUrl}}"></audio>
+			
+			<span class="back" ng-show="flip[$index]">{{card.back}}</span>
+			<audio class="back" ng-show="flip[$index]" ng-src="{{card.b_audio | trustUrl}}"></audio>
+			
+			<span class="phonetic" ng-show="flip[$index]">{{card.phonetic}}</span>
 		</li>
 	</ul>
 </div>

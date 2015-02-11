@@ -83,18 +83,14 @@ body {
 		display: inline-block;
 		margin-top: 60px;
 		font-size: 30px;
-		display: none;
+		/*display: none;*/
 
 	}    
 	span.phonetic {
-		/*line-height: 180px;*/
 		font-size: 15px;
-		display: none;
+		display: block;
 		font-style: italic;
 
-	}
-	span.phonetic-show {
-		display: block;
 	}
 	span.front {
 		display: inline-block;
