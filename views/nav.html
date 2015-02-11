@@ -10,20 +10,24 @@
         </button>
         <div class="navbar-brand">StudyStack</div>
       </div>
-        <div id="navbar" class="navbar-collapse collapse pull-right">
+		<div class="collapse navbar-collapse pull-right" ng-class="{'in':!navCollapsed}">
 		
           <ul class="nav navbar-nav">
 
 			<li class="dropdown">
 			<a href="#" class="dropdown-toggle" ><b class="caret"></b></a>
-              <ul class="dropdown-menu dropdown-menu-right" role="menu">
+
+              <ul class="dropdown-menu dropdown-menu-right" role="menu"
+				ng-controller="Modals">
+				
 				<li class="dropdown-header">Settings</li>
-                <li><a onclick='return false;' data-toggle="collapse" data-target=".navbar-collapse" ng-click="setLanguage();"><span class="glyphicon glyphicon-globe"/> Language</a></li>
+                <li><a onclick='return false;' data-toggle="collapse" data-target=".navbar-collapse" ng-click="setLanguage('lg');"><span class="glyphicon glyphicon-globe"/> Language</a></li>
                 <li class="divider"></li>
                 <li class="dropdown-header">Card Stack</li>
                 <li><a data-toggle="collapse" data-target=".navbar-collapse" ng-click="newStack();"><span class="glyphicon glyphicon-refresh"/> New</a></li>
                 <li ng-show="emptyStack"><a data-toggle="collapse" data-target=".navbar-collapse" ng-click="saveStack();"><span class="glyphicon glyphicon-cloud-upload"/> Save</a></li>
-                <li ng-hide="emptyStack"><a data-toggle="collapse" data-target=".navbar-collapse" ng-click="shareStack();"><span class="glyphicon glyphicon-link"/> Share</a></li>
+
+                <li ng-hide="emptyStack"><a data-toggle="collapse" data-target=".navbar-collapse" ng-click="showShareLink();"><span class="glyphicon glyphicon-link"/> Share</a></li>
                 <li class="divider"></li>
                 <li><a data-toggle="collapse" data-target=".navbar-collapse" ng-click="showAbout();"><span class="glyphicon glyphicon-info-sign"/> About</a></li>
 
