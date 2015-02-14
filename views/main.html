@@ -17,21 +17,20 @@
 					<input type="text" class="phonetic" name="phonetic" placeholder="Phonetic"
 						ng-model="phonetic">
 				</form>
-			</div>
+			</div>			
 		</div>
 
 		<li class="card" swing-card
 			ng-repeat="card in cards" ng-class="card.front">			
 			<a class="listen pull-left glyphicon glyphicon-volume-up" ng-click="listen(card);"></a>
 			<a class="flip pull-right glyphicon glyphicon-share-alt" ng-click="flip[$index]=!flip[$index];" ></a>
-			
-			<span class="front" ng-hide="flip[$index]">{{card.front}}</span>
-			<audio class="front" ng-hide="flip[$index]" ng-src="{{card.f_audio | trustUrl}}"></audio>
-			
-			<span class="back" ng-show="flip[$index]">{{card.back}}</span>
-			<audio class="back" ng-show="flip[$index]" ng-src="{{card.b_audio | trustUrl}}"></audio>
-			
-			<span class="phonetic" ng-show="flip[$index]">{{card.phonetic}}</span>
+			<div class="labels">
+				<span ng-hide="flip[$index]">{{card.front}}</span>
+				<span ng-show="flip[$index]">{{card.back}}</span>
+				<span class="phonetic" ng-show="flip[$index]">{{card.phonetic}}</span>			
+			</div>
+			<audio ng-show="flip[$index]" ng-src="{{card.b_audio | trustUrl}}"></audio>
+			<audio ng-hide="flip[$index]" ng-src="{{card.f_audio | trustUrl}}"></audio>	
 		</li>
 	</ul>
 </div>

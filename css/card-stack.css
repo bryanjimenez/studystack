@@ -1,120 +1,140 @@
-@media (max-width: 979px) {
-html {
-    overflow-y:hidden;
-    overflow-x:hidden;
- }
-  body {
-	background: green;
-    padding-top: 0px;
-  }
+html{
+  overflow-y:hidden;
+  overflow-x:hidden;
+}
+html, body, ul, li{
+  margin: 0;
+  padding: 0;
+}
+body{
+  background: #FCD424;
+  padding-top: 60px;
 }
 
-html {
-    overflow-y:hidden;
-    overflow-x:hidden;
- }
-
-html, body, ul, li {
-  margin: 0;
-  padding: 0; }
-
-body {
-  background: #FCD424;
-    padding-top: 60px;
-
-  }
-.narrow {
-  width: 500px;
-  margin-left: -250px;
-
+#viewport .stack{
+  width: 22em;
+  height: 15em;
+  background: #ED5D52;
+  position: absolute;
+  top: 7em;
   left: 50%;
-  position: absolute; }  
+  margin-left: -11em;
+  border: 5px dotted white;
+  border-radius: 10px;
+}
+#viewport li{
+  width: 22em;
+  height: 15em;
+  list-style: none;
+  background: #fff;
+  border-radius: 5px;
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.2), 1px 1px 1px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  border: 10px solid #ECECEC;
+  box-sizing: border-box;
+  cursor: -webkit-grab;
+  cursor: -moz-grab;
+}
+#viewport li:active{
+  cursor: -webkit-grabbing;
+  cursor: -moz-grabbing;
+  lo
+}
+div.inputwrapper{
+  position: absolute;
+  margin-left: -88px;
+  margin-top: -17px;
+  left: 50%;
+  top: 50%;
+}
+input.back, input.phonetic{
+  display: none;
+}
+span.back{
+  font-size: 2.5em;
+  margin-top: 2em;
+}
+span.front{
+  display: block;
+  margin-top: 2em;
+  font-size: 2.5em;
+}
+div.labels{
+  display: block;
+  margin-top: 2em;
+  font-size: 2.5em;
+}
+span.phonetic{
+  font-size: .5em;
+  display: block;
+  font-style: italic;
+}
+a.flip{
+  text-decoration: none;
+  padding-right: 10px;
+  padding-top: 5px;
+  font-size: 2.5em;
+}
+a.listen{
+  text-decoration: none;
+  padding-left: 10px;
+  padding-top: 5px;
+  font-size: 2.5em;
+}
 
-#viewport {
-  width: 500px;
-  height: 400px;
-  /*background: #C7433E;*/
-  /*border: 10px solid #ED5D52;*/
-  margin: 100px auto 0;
-  position: relative; }
-  #viewport .stack {
-    width: 300px;
-    height: 200px;
-    background: #ED5D52;
-    position: absolute;
-    top: 100px;
-    left: 50%;
-    margin-left: -150px;
-    border: 5px dotted white;
-    border-radius: 10px; }
-  #viewport li {
-    width: 300px;
-    height: 200px;
-    list-style: none;
-    background: #fff;
-    border-radius: 5px;
-    position: absolute;
-    top: -5px;
-    left: -5px;
-    box-shadow: 0 0 2px rgba(0, 0, 0, 0.2), 1px 1px 1px rgba(0, 0, 0, 0.2);
-    /*line-height: 300px;*/
-    text-align: center;
-    /*font-size: 100px;*/
-    border: 10px solid #ECECEC;
-    box-sizing: border-box;
-    cursor: default; 
-    }
-    
+a.flip:hover, a.listen:hover{
+  color: red;
+  cursor: pointer;
+}
+.nav, .pagination, .carousel, .panel-title a{
+  cursor: pointer;
+}
 
-	div.inputwrapper {
-		position: absolute;
-		margin-left: -88px;
-		margin-top: -17px;
-		left: 50%;
-		top: 50%;
-	}
-    input.back, input.phonetic {
-		display: none;
+/*==================================================
+= Bootstrap 3 Media Queries =
+==================================================*/
 
-	}   
-	
-	 
-    span.back {
-		display: inline-block;
-		margin-top: 60px;
-		font-size: 30px;
-		/*display: none;*/
+/*========== Mobile First Method ==========*/
 
-	}    
-	span.phonetic {
-		font-size: 15px;
-		display: block;
-		font-style: italic;
+/* Custom, iPhone Retina */
+@media only screen and (min-width : 320px){
+  body{
+    background: red;
+  }
+  
+}
 
-	}
-	span.front {
-		display: inline-block;
-		margin-top: 60px;
-		font-size: 30px;
+/* Extra Small Devices, Phones */
+@media only screen and (min-width : 480px){
+  body{
+    background: orange;
+  }
+  
+}
 
-	}
-	a.flip {
-		text-decoration: none;
-		padding-right: 10px;
-		padding-top: 5px;
-		font-size:24px;
+/* Small Devices, Tablets */
+@media only screen and (min-width : 768px){
+  body{
+    background: green;
+  }
+  
+}
 
-	}
-	a.listen {
-		text-decoration: none;
-		padding-left: 10px;
-		padding-top: 5px;
-		font-size:24px;
+/* Medium Devices, Desktops */
+@media only screen and (min-width : 992px){
+  body{
+    background: navy;
+  }
+  
+}
 
-	}	
-	 a.flip:hover, a.listen:hover {
-		color: red;
-		cursor: pointer;
-	}
-
-	.nav, .pagination, .carousel, .panel-title a { cursor: pointer; }
+/* Large Devices, Wide Screens */
+@media only screen and (min-width : 1200px){
+  body{
+    background: purple;
+  }
+  
+}
