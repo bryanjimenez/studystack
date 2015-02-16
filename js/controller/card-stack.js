@@ -151,9 +151,10 @@ studystack.controller('card-stack', function ($rootScope, $scope, $firebase, $lo
     $scope.phonetic = "";
   } //addCard
 
-  $scope.listen = function (card) {
-    $('li.' + card.front + ' > audio:not(.ng-hide)')[0].play();
+  $scope.listen = function (index) {
+     $('li.card_' + index + ' > audio:not(.ng-hide)')[0].play();
   } // listen
+
   $scope.reset = function () {
     $('input').each(function () {
       $(this).toggle().not('.phonetic').focus();

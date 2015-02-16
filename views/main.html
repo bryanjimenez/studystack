@@ -21,8 +21,8 @@
 		</div>
 
 		<li class="card" swing-card
-			ng-repeat="card in cards" ng-class="card.front">			
-			<a class="listen pull-left glyphicon glyphicon-volume-up" ng-click="listen(card);"></a>
+			ng-repeat="card in cards" ng-class="'card_'+$index">			
+			<a class="listen pull-left glyphicon glyphicon-volume-up" ng-click="listen($index);"></a>
 			<a class="flip pull-right glyphicon glyphicon-share-alt" ng-click="flip[$index]=!flip[$index];" ></a>
 			<div class="labels">
 				<span ng-hide="flip[$index]">{{card.front}}</span>
