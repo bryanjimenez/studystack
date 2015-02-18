@@ -3,20 +3,18 @@
 </div>
 <div class="modal-body">
 	<span>Front</span>
-	<select>
-		<option ng-repeat="(language, key) in languages">
-			{{ language }}
-		</option>
+	<!--<select ng-model="opt_fl" ng-options="opt_fl as (language, key) for opt_fl in languages">
+	</select>-->
+	<select ng-model="opt_fl">
+    <option ng-repeat="(language, key) in languages">{{language}}</option>
 	</select>
 	<br/><br/>
 	<span>Back</span>
-	<select>
-		<option ng-repeat="(language, key) in languages">
-			{{ language }}
-		</option>
+	<select ng-model="opt_bl">
+    <option ng-repeat="(language, key) in languages">{{language}}</option>
 	</select>
 	
 </div>
 <div class="modal-footer">
-	<button class="btn btn-primary" ng-click="close()">OK</button>
+	<button class="btn btn-primary" ng-click="ok()">OK</button>
 </div>

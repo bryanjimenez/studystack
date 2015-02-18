@@ -21,7 +21,9 @@
 				ng-controller="Modals">
 				
 				<li class="dropdown-header">Settings</li>
-                <li><a onclick='return false;' data-toggle="collapse" data-target=".navbar-collapse" ng-click="setLanguage('sm');"><span class="glyphicon glyphicon-globe"/> Language</a></li>
+                <li ng-hide="haveStack"><a data-toggle="collapse" data-target=".navbar-collapse" ng-click="setLanguage('sm');">
+                      <span class="glyphicon glyphicon-globe"/> Language</a>
+                </li>
                 <li class="divider"></li>
                 <li class="dropdown-header">Card Stack</li>
                 <li><a data-toggle="collapse" data-target=".navbar-collapse" ng-click="newStack();"><span class="glyphicon glyphicon-refresh"/> New</a></li>

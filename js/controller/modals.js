@@ -1,4 +1,4 @@
-studystack.controller('Modals', function ($scope, $modal, $log, $location) {
+studystack.controller('Modals', function ($rootScope, $scope, $modal, $log, $location) {
 
   //this is the standard location javascript global
   //$scope.link = location.origin+location.hash;
@@ -76,7 +76,7 @@ studystack.controller('Modals', function ($scope, $modal, $log, $location) {
 
     var modalInstance = $modal.open({
       templateUrl: 'views/about.html',
-      controller: 'ModalGeneric',
+      controller: 'ModalMessage',
       size: size,
       resolve: {
         msg: null
@@ -90,7 +90,7 @@ studystack.controller('Modals', function ($scope, $modal, $log, $location) {
   $scope.setLanguage = function (size) {
     var modalInstance = $modal.open({
       templateUrl: 'views/language.html',
-      controller: 'ModalInstanceCtrl',
+      controller: 'ModalSetLanguage',
       size: size,
       resolve: {
         languages: function () {
@@ -101,14 +101,19 @@ studystack.controller('Modals', function ($scope, $modal, $log, $location) {
 
     });
 
-    modalInstance.result.then(function () {
+    modalInstance.result.then(function (languages) {
+      $rootScope.fl = $scope.languages[languages.fl];
+      $rootScope.bl = $scope.languages[languages.bl];
+    },function () {
       $log.info('Modal dismissed at: ' + new Date());
     });
   }; // setLanguage
+
+
   $scope.showShareLink = function (size) {
     var modalInstance = $modal.open({
       templateUrl: 'views/share.html',
-      controller: 'ModalGeneric',
+      controller: 'ModalMessage',
       size: size,
       resolve: {
         msg: function () {
@@ -123,9 +128,8 @@ studystack.controller('Modals', function ($scope, $modal, $log, $location) {
   }; // showShareLink
 });
 
-// Please note that $modalInstance represents a modal window (instance) dependency.
-// It is not the same as the $modal service used above.
-studystack.controller('ModalGeneric', function ($scope, $modalInstance, msg) {
+
+studystack.controller('ModalMessage', function ($scope, $modalInstance, msg) {
 
   $scope.link = msg;
 
@@ -135,13 +139,15 @@ studystack.controller('ModalGeneric', function ($scope, $modalInstance, msg) {
 
 });
 
-studystack.controller('ModalInstanceCtrl', function ($scope, $modalInstance, msg, languages) {
+studystack.controller('ModalSetLanguage', function ($scope, $modalInstance, msg, languages) {
 
   $scope.link = msg;
   $scope.languages = languages;
 
-  $scope.close = function () {
-    $modalInstance.close();
+  $scope.ok = function () {
+    console.log('ok')
+    console.log($scope.opt_fl);
+    console.log($scope.opt_bl);
+    $modalInstance.close({fl:$scope.opt_fl, bl:$scope.opt_bl});
   };
-
 });
