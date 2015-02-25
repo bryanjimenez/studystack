@@ -145,9 +145,6 @@ studystack.controller('ModalSetLanguage', function ($scope, $modalInstance, msg,
   $scope.languages = languages;
 
   $scope.ok = function () {
-    console.log('ok')
-    console.log($scope.opt_fl);
-    console.log($scope.opt_bl);
     $modalInstance.close({fl:$scope.opt_fl, bl:$scope.opt_bl});
   };
 });
